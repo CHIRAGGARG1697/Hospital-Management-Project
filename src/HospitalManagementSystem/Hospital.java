@@ -31,20 +31,25 @@ public class Hospital {
                     case 1:
                         // Add Patient
                         patient.addPatient();
+                        break;
                     case 2:
                         // View Patients
                         patient.viewPatient();
+                        break;
                     case 3:
                         //View Doctors
                         doctor.viewDoctors();
+                        break;
                     case 4:
                         // Book Appointment
                         bookappointment(patient,doctor,connection,scanner);
+                        break;
                     case 5:
                         return;
 
                     default:
                         System.out.println("Enter Valid Choice!!!");
+                        break;
 
 
                 }
@@ -60,29 +65,30 @@ public class Hospital {
        System.out.println("Enter Doctor ID");
        int doctorId = scanner.nextInt();
        System.out.println("Enter Appointment Date (YYYY-MM-DD)");
-       String appointmentdate = scanner.next();
-       if(patient.getPatientById(patientId) && doctor.getDoctorsById(doctorId)){
-       if(checkDoctorAvailability(doctorId,appointmentdate,connection)){
-           String appointmentQuery="Insert into appointments(patient_id,doctor_id,appointment_date) values(?,?,?)";
-           try{
-               PreparedStatement preparedStatement = connection.prepareStatement(appointmentQuery);
-               preparedStatement.setInt(1,patientId);
-               preparedStatement.setInt(2,doctorId);
-               preparedStatement.setString(3,appointmentdate);
-               int rowsAffected= preparedStatement.executeUpdate();
-               if(rowsAffected>0){
-                   System.out.println("Appointment Booked");
-               }else{
-                   System.out.println("Failed to Book Appointment");
+       String appointmentDate = scanner.next();
+       if(patient.getPatientById(patientId) && doctor.getDoctorsById(doctorId)) {
+           if (checkDoctorAvailability(doctorId, appointmentDate, connection)) {
+               String appointmentQuery = "Insert into appointments(patient_id,doctor_id,appointment_date) values(?,?,?)";
+               try {
+                   PreparedStatement preparedStatement = connection.prepareStatement(appointmentQuery);
+                   preparedStatement.setInt(1, patientId);
+                   preparedStatement.setInt(2, doctorId);
+                   preparedStatement.setString(3, appointmentDate);
+                   int rowsAffected = preparedStatement.executeUpdate();
+                   if (rowsAffected > 0) {
+                       System.out.println("Appointment Booked");
+                   } else {
+                       System.out.println("Failed to Book Appointment");
+                   }
+               } catch (SQLException e) {
+                   e.printStackTrace();
                }
-           }catch (SQLException e){
-               e.printStackTrace();
+
+
+           } else {
+               System.out.println("Doctor Not Availaible on this Date");
            }
-
-
-       }
-       }else {
-           System.out.println("Doctor Not Availaible on this Date");
+       } else{
 
            System.out.println("Either Doctor or Patient doesn't Exist!!!");
        }

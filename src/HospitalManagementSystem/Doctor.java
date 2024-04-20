@@ -22,15 +22,15 @@ public class Doctor {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 ResultSet resultSet= preparedStatement.executeQuery();
                 System.out.println("Doctors: ");
-                System.out.println("+-------------+--------------+-----------------+-------------+");
-                System.out.println("|Doctor ID    |NAME          |SPECIALIZATION                   +");
-                System.out.println("+-------------+---------------+-----------------+-------------+");
+                System.out.println("+-------------+--------------+-----------------+");
+                System.out.println("|Doctor ID    |NAME          |SPECIALIZATION     ");
+                System.out.println("+-------------+---------------+-----------------+");
                 while(resultSet.next()){
                     int id= resultSet.getInt("id");
                     String name= resultSet.getString("name");
                     String specialization= resultSet.getString("specialization");
-                    System.out.printf("|%-15s|%-15s|%-32s|\n",id,name,specialization);
-                    System.out.println("+-------------+---------------+-----------------+-------------+");
+                    System.out.printf("|%-15s|%-15s|%-15s|\n",id,name,specialization);
+                    System.out.println("+-------------+---------------+-----------------+");
 
 
                 }
@@ -43,7 +43,7 @@ public class Doctor {
             String query = "select * from doctors WHERE id=?";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                PreparedStatement.setInt(1, id);
+                preparedStatement.setInt(1,id);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     return true;

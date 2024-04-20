@@ -70,7 +70,7 @@ public class Patient {
         String query = "select * from patients WHERE id=?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            PreparedStatement.setInt(1, id);
+            preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return true;
